@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800&display=swap');
+
 html,
 body {
     padding: 0;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 16px;
+    overflow: hidden;
 }
 
 a {
@@ -13,4 +16,14 @@ a {
 
 * {
     box-sizing: border-box;
+}
+
+#gradient-canvas {
+    --gradient-color-1: #4634eb; 
+    --gradient-color-2: #1363db; 
+    --gradient-color-3: #34c6eb;  
+    --gradient-color-4: #00e9a3;
+
+
+    --test: #001aff;
 }
