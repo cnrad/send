@@ -17,13 +17,3 @@ a {
 * {
     box-sizing: border-box;
 }
-
-#gradient-canvas {
-    --gradient-color-1: #4634eb; 
-    --gradient-color-2: #1363db; 
-    --gradient-color-3: #34c6eb;  
-    --gradient-color-4: #00e9a3;
-
-
-    --test: #001aff;
-}

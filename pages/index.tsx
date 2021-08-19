@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import WebGLAnim from '../src/webgl';
+import Head from 'next/head';
 
 export default function Home() {
 
@@ -18,20 +19,23 @@ export default function Home() {
             message: message.value
         })
 
-        if(response.data.result === "MESSAGE_TOO_LONG") return setErrMsg("Error: Message length over 500 characters")
-        if(response.data.result === "NAME_TOO_LONG") return setErrMsg("Error: Name length over 30 characters")
+        if(response.data.result === "MESSAGE_TOO_LONG") return setErrMsg("Error: Message length over 500 characters");
+        if(response.data.result === "NAME_TOO_LONG") return setErrMsg("Error: Name length over 30 characters");
+        if(response.data.result === "DISCORD_API_ERROR") return setErrMsg("Error: Could not connect to Discord");
 
-        return setErrMsg("Your message was successfully sent!")
+        return setErrMsg("Your message was successfully sent!");
 
     }
 
     useEffect(() => {
         WebGLAnim();
-    })
+    }, [])
 
     return (
         <>
-            <Background id="gradient-canvas"/>
+            <Head>
+                <title>💬 send.cnrad.dev</title>
+            </Head>
 
             <Content>
                 <Header>
@@ -42,7 +46,7 @@ export default function Home() {
                 </Paragraph>
                 <Container>
                     <NameField type="text" id="nameField" placeholder="Your name" maxLength={30} />
-                    <MessageField id="messageField" placeholder="Your message here!" maxLength={500} />
+                    <MessageField id="messageField" placeholder="Your message" maxLength={900} />
                     <ErrorMessage style={{color: errMsg == "Your message was successfully sent!" ? "#0051ff" : "#df4747"}}>{errMsg}</ErrorMessage>
                     <SendBtn onClick={sendMessage} whileTap={{scale: 0.97}}>Send Message</SendBtn>
                 </Container>
@@ -54,13 +58,6 @@ export default function Home() {
 const CnradSpan = styled.span`
     color: #fff;
     filter: drop-shadow(0 0 3px #fff);
-`
-
-const Background = styled(motion.canvas)`
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    inset: 0;
 `
 
 const Content = styled.div`
@@ -81,21 +78,32 @@ const Header = styled.div`
     font-weight: bold;
     margin-bottom: 0.5rem;
     color: #fcfcfc;
+
+    @media (max-width: 500px) {
+        font-size: 3rem;
+    }
 `
 
 const Paragraph = styled.div`
     font-size: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+
+    @media (max-width: 500px) {
+        font-size: 1.25rem;
+    }
 `
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
 
-    width: 50rem;
-    height: 30rem;
+    width: 75%;
+    min-width: 10rem;
+    max-width: 50rem;
+    height: auto;
     background: #fff;
     border-radius: 15px;
     padding: 2rem;
@@ -111,7 +119,7 @@ const NameField = styled.input`
 
     outline: none;
     background: #ddd;
-    border-radius: 5px;
+    border-radius: 10px;
     border: solid 2px #ddd;
     padding: 0.5rem;
     transition: all 0.15s ease-in-out;
@@ -126,13 +134,13 @@ const NameField = styled.input`
 const MessageField = styled.textarea`
     width: 100%;
     height: 50%;
-
+    min-height: 13rem;
     font-family: "Inter";
     font-size: 1rem;
 
     outline: none;
     background: #ddd;
-    border-radius: 5px;
+    border-radius: 10px;
     border: solid 2px #ddd;
     padding: 0.5rem;
     transition: all 0.15s ease-in-out;
@@ -149,17 +157,21 @@ const ErrorMessage = styled.p`
     font-weight: 500;
     width: 100%;
     text-align: center;
-
     margin-bottom: 1rem;
+
+    @media (max-width: 500px) {
+        font-size: 0.85rem;
+    }
 `
 
 const SendBtn = styled(motion.button)`
     padding: 1rem 1.5rem;
     border: none;
-    background: #001aff;
+    background: #0051ff;
     font-size: 1rem;
     font-weight: 500;
     color: #fff;
     border-radius: 15px;
     letter-spacing: 0.05rem;
+    cursor: pointer;
 `
