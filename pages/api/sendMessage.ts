@@ -21,6 +21,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     axios.post(process.env.WEBHOOK_URL as string, {
         "embeds": [{
             "color": 3108090,
+            "title": req.headers['x-forwarded-for'] ?? req.connection.remoteAddress ?? 'unknown!?',
             "author": {
                 "name": data.name
             },
