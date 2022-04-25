@@ -17,11 +17,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     if(data.message.length > 1000) return res.status(500).json({ result: 'MESSAGE_TOO_LONG' });
     if(data.name.length > 30) return res.status(500).json({ result: 'NAME_TOO_LONG' });
-
     axios.post(process.env.WEBHOOK_URL as string, {
         "embeds": [{
             "color": 3108090,
-            "title": req.headers['x-forwarded-for'] ?? req.connection.remoteAddress ?? 'unknown!?',
+            "title": req.headers['x-forwarded-for'] ?? req.socket.remoteAddress ?? 'unknown!?',
             "author": {
                 "name": data.name
             },

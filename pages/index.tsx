@@ -13,19 +13,21 @@ export default function Home() {
         let name = document.querySelector("#nameField") as HTMLInputElement;
         let message = document.querySelector("#messageField") as HTMLInputElement;
 
-        if(name.value == "" || message.value == "") return setErrMsg("Error: Field empty");
+        if (name.value == "" || message.value == "") return setErrMsg("Error: Field empty");
 
         let response = await axios.post("/api/sendMessage", {
             name: name.value,
             message: message.value
         })
 
-        if(response.data.result === "MESSAGE_TOO_LONG") return setErrMsg("Error: Message length over 500 characters");
-        if(response.data.result === "NAME_TOO_LONG") return setErrMsg("Error: Name length over 30 characters");
-        if(response.data.result === "MESSAGE_EMPTY") return setErrMsg("Error: Message empty");
-        if(response.data.result === "NAME_EMPTY") return setErrMsg("Error: Name empty");
-        if(response.data.result === "DISCORD_API_ERROR") return setErrMsg("Error: Could not connect to Discord");
+        if (response.data.result === "MESSAGE_TOO_LONG") return setErrMsg("Error: Message length over 500 characters");
+        if (response.data.result === "NAME_TOO_LONG") return setErrMsg("Error: Name length over 30 characters");
+        if (response.data.result === "MESSAGE_EMPTY") return setErrMsg("Error: Message empty");
+        if (response.data.result === "NAME_EMPTY") return setErrMsg("Error: Name empty");
+        if (response.data.result === "DISCORD_API_ERROR") return setErrMsg("Error: Could not connect to Discord");
 
+        name.value = ""
+        message.value = ""
         return setErrMsg("Your message was successfully sent!");
     }
 
@@ -62,7 +64,7 @@ export default function Home() {
                 <title>💬 send.cnrad.dev</title>
             </Head>
 
-            <Background src="/background.jpg"/>
+            <Background src="/background.jpg" />
 
             <Content initial="init" animate="load" variants={containerAnim}>
                 <Header variants={childAnim}>
@@ -74,8 +76,8 @@ export default function Home() {
                 <Container variants={childAnim}>
                     <NameField type="text" id="nameField" placeholder="Your name" maxLength={30} />
                     <MessageField id="messageField" placeholder="Your message" maxLength={900} />
-                    <ErrorMessage style={{color: errMsg == "Your message was successfully sent!" ? "#0051ff" : "#df4747"}}>{errMsg}</ErrorMessage>
-                    <SendBtn onClick={sendMessage} whileTap={{scale: 0.97}} transition={{duration: 0.1, ease: "easeInOut"}}>Send Message</SendBtn>
+                    <ErrorMessage style={{ color: errMsg == "Your message was successfully sent!" ? "#0051ff" : "#df4747" }}>{errMsg}</ErrorMessage>
+                    <SendBtn onClick={sendMessage} whileTap={{ scale: 0.97 }} transition={{ duration: 0.1, ease: "easeInOut" }}>Send Message</SendBtn>
                 </Container>
             </Content>
         </>
